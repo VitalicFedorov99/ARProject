@@ -11,6 +11,8 @@ public class PlaceTrackedImage : MonoBehaviour
 {
     [SerializeField] private GameObject[] _arPrefabs;
     [SerializeField] private float _size;
+    [SerializeField] private FactoryEnemy _factory;
+    [SerializeField] private GameObject _greenBox;
     private ARTrackedImageManager _arTrackedImageManager;
 
     private readonly Dictionary<string, GameObject> _instantiatePrefabs = new Dictionary<string, GameObject>();
@@ -21,9 +23,13 @@ public class PlaceTrackedImage : MonoBehaviour
 
         foreach (var prefab in _arPrefabs)
         {
-            var newPrefab = Instantiate(prefab, new Vector3(100, 100, 100), Quaternion.identity);
-            newPrefab.transform.Rotate(new Vector3(-90, 0, 0));
+            //var newPrefab = Instantiate(prefab, new Vector3(100, 100, 100), Quaternion.identity);
+
+            var newPrefab = prefab;
+            //newPrefab.SetActive(true);
+            //newPrefab.transform.Rotate(new Vector3(-90, 0, 0));
             newPrefab.transform.localScale -= new Vector3(newPrefab.transform.localScale.x / _size, 0, newPrefab.transform.localScale.z / _size);
+            _greenBox.transform.localScale -= new Vector3(0, _greenBox.transform.localScale.y / _size, 0);
             newPrefab.name = prefab.name;
             newPrefab.gameObject.SetActive(false);
             _instantiatePrefabs.Add(prefab.name, newPrefab);
@@ -70,6 +76,7 @@ public class PlaceTrackedImage : MonoBehaviour
             return;
         _instantiatePrefabs[name].SetActive(true);
         _instantiatePrefabs[name].transform.position = position;
+        //_factory.StartWork();
         foreach (var go in _instantiatePrefabs.Values)
         {
             if (go.name != name)

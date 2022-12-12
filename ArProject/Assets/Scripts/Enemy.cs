@@ -10,11 +10,12 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private Transform _startPoint;
     [SerializeField] private Transform _endPoint;
+    [SerializeField] private Hole _hole;
 
 
-
-    public void Activation(Transform start, Transform end)
+    public void Activation(Transform start, Transform end,Hole hole)
     {
+        _hole = hole;
         _startPoint = start;
         _endPoint = end;
         transform.position = _startPoint.position;
@@ -35,6 +36,7 @@ public class Enemy : MonoBehaviour
     {
         yield return StartCoroutine(CoroutineMove(_endPoint));
         StartCoroutine(CoroutineStay());
+         
     }
 
 
@@ -42,11 +44,17 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitForSeconds(_timeStay);
         Debug.Log("Вызываюсь");
-        StartCoroutine(CoroutineMove(_startPoint));
+        yield return StartCoroutine(CoroutineMove(_startPoint));
+        _hole.IsFree(true);
+        Destroy(gameObject);
     }
 
-    public void Test()
+
+    private void OnMouseDown()
     {
-        Activation(_startPoint, _endPoint);
+        Debug.Log("Попал");
+        _hole.IsFree(true);
+        Destroy(gameObject);
     }
+
 }
