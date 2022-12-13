@@ -11,10 +11,11 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Transform _startPoint;
     [SerializeField] private Transform _endPoint;
     [SerializeField] private Hole _hole;
+     private Score _scoreField;
 
-
-    public void Activation(Transform start, Transform end,Hole hole)
+    public void Activation(Transform start, Transform end,Hole hole, Score score)
     {
+        _scoreField = score;
         _hole = hole;
         _startPoint = start;
         _endPoint = end;
@@ -43,7 +44,7 @@ public class Enemy : MonoBehaviour
     IEnumerator CoroutineStay()
     {
         yield return new WaitForSeconds(_timeStay);
-        Debug.Log("Вызываюсь");
+        //Debug.Log("Вызываюсь");
         yield return StartCoroutine(CoroutineMove(_startPoint));
         _hole.IsFree(true);
         Destroy(gameObject);
@@ -52,8 +53,9 @@ public class Enemy : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Debug.Log("Попал");
+        //Debug.Log("Попал");
         _hole.IsFree(true);
+        _scoreField.UpdateScore(_score);
         Destroy(gameObject);
     }
 

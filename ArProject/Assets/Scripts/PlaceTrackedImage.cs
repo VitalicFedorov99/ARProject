@@ -29,7 +29,7 @@ public class PlaceTrackedImage : MonoBehaviour
             //newPrefab.SetActive(true);
             //newPrefab.transform.Rotate(new Vector3(-90, 0, 0));
             newPrefab.transform.localScale -= new Vector3(newPrefab.transform.localScale.x / _size, 0, newPrefab.transform.localScale.z / _size);
-            _greenBox.transform.localScale -= new Vector3(0, _greenBox.transform.localScale.y / _size, 0);
+            //_greenBox.transform.localScale -= new Vector3(0, _greenBox.transform.localScale.y / _size, 0);
             newPrefab.name = prefab.name;
             newPrefab.gameObject.SetActive(false);
             _instantiatePrefabs.Add(prefab.name, newPrefab);

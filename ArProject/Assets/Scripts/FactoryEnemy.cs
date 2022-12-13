@@ -12,6 +12,7 @@ public class FactoryEnemy : MonoBehaviour
     [SerializeField] private bool _flagWork = true;
     [SerializeField] private GameObject _mainObject;
     [SerializeField] private float _size;
+    [SerializeField] private Score _score;
     private void Update()
     {
         //var randomPosition = Random.Range(0, spawnPoints.Count);
@@ -43,7 +44,7 @@ public class FactoryEnemy : MonoBehaviour
         var enemy = Instantiate(_enemies[randEnemy], _holes[rand].transform.position,Quaternion.identity);
         enemy.transform.localScale -= new Vector3(enemy.transform.localScale.x / _size, enemy.transform.localScale.y / _size, enemy.transform.localScale.z / _size);
         //enemy.transform.position = _holes[rand].GetStartPoint().position; 
-        enemy.GetComponent<Enemy>().Activation(_holes[rand].GetStartPoint(), _holes[rand].GetEndPoint(),_holes[rand]);
+        enemy.GetComponent<Enemy>().Activation(_holes[rand].GetStartPoint(), _holes[rand].GetEndPoint(),_holes[rand],_score);
         _holes[rand].IsFree(false);
     }
 
